@@ -13,18 +13,21 @@ Here's how you create an Instance of it:
 ```java
 
 import me.mohammad.filedownloader.FileDownloader;
+import me.mohammad.filedownloader.libraries.DownloadType;
 
 public class Example {
 
     private FileDownloader fileDownloader;
 
     public Example() {
-        fileDownloader = new FileDownloader();
+        fileDownloader = new FileDownloader(DownloadType.JAVA_IO);
     }
   
 }
 
 ```
+
+The constructor `new FileDownloader(DownloadType)` takes a DownloadType as a parameter, you can use `DownloadType.JAVA_IO` for buffered downloading and `DownloadType.JAVA_NIO` for socket downloading.
 
 ---
 
