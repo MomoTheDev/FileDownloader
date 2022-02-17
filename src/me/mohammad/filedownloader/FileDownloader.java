@@ -3,33 +3,40 @@ package me.mohammad.filedownloader;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Consumer;
+
+import me.mohammad.filedownloader.libraries.DownloadType;
+import me.mohammad.filedownloader.libraries.Downloader;
+import me.mohammad.filedownloader.managers.ActionManager;
+import me.mohammad.filedownloader.managers.download.BufferedDownloader;
+import me.mohammad.filedownloader.managers.download.DownloadOperation;
+import me.mohammad.filedownloader.managers.download.SocketDownloader;
 
 public class FileDownloader {
 	
 	private Downloader downloader;
+	private ActionManager actionManager;
+	private Map<String, Downloader> downloaders;
 	private Map<String, DownloadOperation> operations;
 	
-	protected Consumer<DownloadOperation> onStartedDownloading;
-	protected Consumer<DownloadOperation> onFinishedDownloading;
-	
-	public FileDownloader() {
-		setOnStartedDownloading((operation) -> {});
-		setOnFinishedDownloading((operation) -> {});
+	public FileDownloader(final DownloadType type) {
+		initializeDownloaders();
+		actionManager = new ActionManager();
 		operations = new HashMap<>();
-		downloader = new Downloader(this);
+		downloader = downloaders.get(type.getDownloadManager());
 	}
 	
-	protected Map<String, DownloadOperation> getOperations() {
+	private void initializeDownloaders() {
+		downloaders = new HashMap<>();
+		downloaders.put("managers/download/buffer", new BufferedDownloader(this));
+		downloaders.put("managers/download/socket", new SocketDownloader(this));
+	}
+	
+	public ActionManager getActionManager() {
+		return actionManager;
+	}
+	
+	public Map<String, DownloadOperation> getOperations() {
 		return operations;
-	}
-	
-	public void setOnStartedDownloading(final Consumer<DownloadOperation> handler) {
-		onStartedDownloading = handler;
-	}
-	
-	public void setOnFinishedDownloading(final Consumer<DownloadOperation> handler) {
-		onFinishedDownloading = handler;
 	}
 	
 	public DownloadOperation getOperation(final String operationName) {
