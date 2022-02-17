@@ -27,7 +27,7 @@ public class Example {
 
 ```
 
-The constructor `new FileDownloader(DownloadType)` takes a DownloadType as a parameter, you can use `DownloadType.JAVA_IO` for buffered downloading and `DownloadType.JAVA_NIO` for socket downloading.
+The constructor `new FileDownloader(DownloadType)` takes a `DownloadType` type as a parameter, you can use `DownloadType.JAVA_IO` for buffered downloading and `DownloadType.JAVA_NIO` for socket downloading.
 
 ---
 
