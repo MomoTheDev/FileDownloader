@@ -19,9 +19,9 @@ public class FileDownloader {
 	private Map<String, DownloadOperation> operations;
 	
 	public FileDownloader(final DownloadType type) {
-		initializeDownloaders();
 		actionManager = new ActionManager();
 		operations = new HashMap<>();
+		initializeDownloaders();
 		downloader = downloaders.get(type.getDownloadManager());
 	}
 	
